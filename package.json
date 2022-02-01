@@ -1,0 +1,33 @@
+{
+  "name": "flyspace",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DarbazAli/flyspace.git"
+  },
+  "keywords": [
+    "REST",
+    "API"
+  ],
+  "author": "Darbaz Ali",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DarbazAli/flyspace/issues"
+  },
+  "homepage": "https://github.com/DarbazAli/flyspace#readme",
+  "dependencies": {
+    "dotenv": "^15.0.0",
+    "express": "^4.17.2",
+    "knex": "^1.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
