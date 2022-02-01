@@ -13,7 +13,7 @@
 
 import flyspaceDB from "../db/flyspaceDB.js"
 
-/*= ======================================================================
+/*======================================================================
     GET ALL TASKS
     ====================================================================
     @Description:
@@ -40,4 +40,34 @@ const getAllTasks = async (req, res) => {
     }
 }
 
-export { getAllTasks }
+/*======================================================================
+    CREATE NEW TASK
+    ====================================================================
+    @Description:
+    Takes uer input and as a taks, and puts into DB
+
+    Routing:
+    @METHOD: POST
+    @ROUTE: /api/tasks
+    @ACCESS: Public
+
+    @Body Parameters
+    title: String -> requried
+    description: String -> optional
+======================================================================= */
+const createNewTask = async (req, res) => {
+    const { title, description } = req.body
+
+    // check for title
+    if (!title) {
+        res.send("Title is required!")
+    }
+
+    try {
+        await flyspaceDB("tasks").insert({ title, description })
+        res.status(200).send("Taks created successfully!")
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
+}
+export { getAllTasks, createNewTask }
