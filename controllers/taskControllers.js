@@ -65,9 +65,45 @@ const createNewTask = async (req, res) => {
 
     try {
         await flyspaceDB("tasks").insert({ title, description })
-        res.status(200).send("Taks created successfully!")
+        res.status(200).send("Task created successfully!")
     } catch (error) {
         res.status(400).send(error.message)
     }
 }
-export { getAllTasks, createNewTask }
+
+/*======================================================================
+    DELETE TASK
+    ====================================================================
+    @Description:
+    Takes a task id from user, and deletes the corresponding task
+
+    Routing:
+    @METHOD: DELETE
+    @ROUTE: /api/tasks/id
+    @ACCESS: Public
+
+    @URL Parameters
+    id: int -> requried
+======================================================================= */
+const deleteTask = async (req, res) => {
+    const { id } = req.params
+
+    // check for ID
+    if (!id) {
+        res.send("ID is required!")
+    }
+
+    try {
+        // delete hexgroup from hexagon_group table
+        const deletedTask = await flyspaceDB("tasks").where("id", id).del()
+        if (deletedTask) {
+            res.status(200).send("Task deleted successfully!")
+        } else {
+            res.status(404).send(`Task with ID ${id} not found!`)
+        }
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
+}
+
+export { getAllTasks, createNewTask, deleteTask }
