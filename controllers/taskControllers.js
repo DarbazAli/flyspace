@@ -94,7 +94,7 @@ const deleteTask = async (req, res) => {
     }
 
     try {
-        // delete hexgroup from hexagon_group table
+        // delete task
         const deletedTask = await flyspaceDB("tasks").where("id", id).del()
         if (deletedTask) {
             res.status(200).send("Task deleted successfully!")
@@ -106,4 +106,62 @@ const deleteTask = async (req, res) => {
     }
 }
 
-export { getAllTasks, createNewTask, deleteTask }
+/*======================================================================
+    UPDATE TASK
+    ====================================================================
+    @Description:
+    Takes a task id, title, description, completed from user, and updates the corresponding task
+
+    Routing:
+    @METHOD: PUT
+    @ROUTE: /api/tasks/id
+    @ACCESS: Public
+
+    @URL Parameters
+    id: int -> requried
+
+    @BODY Parameters
+    title: string -> optional
+    description: string -> optional
+    completed: boolean -> optional
+======================================================================= */
+const updateTask = async (req, res) => {
+    const { id } = req.params
+    const { title, description, completed } = req.body
+
+    // check for ID
+    if (!id) {
+        res.send("ID is required!")
+    }
+
+    if (!title && !description && !completed) {
+        res.send("Nothing to update!")
+    }
+
+    try {
+        //update task
+        const updatedTaskQuery = flyspaceDB("tasks").where("id", id)
+        if (title) {
+            updatedTaskQuery.update({ title: title })
+        }
+
+        if (description) {
+            updatedTaskQuery.update({ description: description })
+        }
+
+        if (completed) {
+            updatedTaskQuery.update({ completed: completed })
+        }
+
+        const task = await updatedTaskQuery
+        if (task) {
+            res.send("Task updated")
+        } else {
+            res.send("Error: Task not found")
+        }
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
+}
+
+export { getAllTasks, createNewTask, deleteTask, updateTask }

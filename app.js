@@ -1,3 +1,13 @@
+/* 
+    Express app settings
+
+    @author: Darbaz Ali
+    @date: Feb 1st, 2022
+
+    Description
+    This file contains all the settings related to the express server,
+    also all the middlewares and custom routes has been mounted here
+*/
 import express from "express"
 import dotenv from "dotenv"
 dotenv.config()
